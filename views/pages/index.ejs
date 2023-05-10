@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Lista de deseos</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+<div class="container">
+    <h1>Lista de deseos</h1>
+
+    <form method="POST" action="/add">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="price">Precio:</label>
+        <input type="number" id="price" name="price" step="0.01" required>
+
+        <label for="description">Descripción:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <input type="submit" value="Agregar">
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let i = 0; i < wishlist.length; i++) { %>
+            <tr>
+                <td><%= wishlist[i].name %></td>
+                <td>$<%= parseFloat(wishlist[i].price).toFixed(2) %></td>
+                <td><%= wishlist[i].description %></td>
+                <td>
+                    <form method="POST" action="/edit/<%= i %>">
+                        <input type="hidden" name="_method" value="PUT">
+                        <input type="submit" value="Editar">
+                    </form>
+                    <form method="POST" action="/delete/<%= i %>">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" value="Eliminar">
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>
+
+
